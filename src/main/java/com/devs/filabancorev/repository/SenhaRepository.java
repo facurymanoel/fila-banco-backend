@@ -19,5 +19,34 @@ public interface SenhaRepository extends JpaRepository<Senha, Long> {
 	        LIMIT 1
 			""")
 	Optional<Senha> buscarUltimaSenha(@Param("tipo") String tipo);
+	
+	@Query("""
+			SELECT s
+			FROM Senha s
+			 WHERE s.status = 'ATENDENDO'
+			 """)
+	Optional<Senha> buscarSenhaEmAtendimento();
+	
+	@Query(nativeQuery = true, value = """
+			SELECT *
+			FROM senha
+			WHERE tipo = 'PREFERENCIAL'
+            AND status = 'AGUARDANDO'
+			ORDER BY id ASC
+			LIMIT 1
+			""")
+	Optional<Senha>buscarProximaPreferencial();
+	
+	@Query(nativeQuery = true, value = """
+			SELECT *
+			FROM senha
+			WHERE tipo = 'NORMAL'
+            AND status = 'AGUARDANDO'
+			ORDER BY id ASC
+			LIMIT 1
+			""")
+	Optional<Senha>buscarProximaNormal();
+	
+	
 
 }

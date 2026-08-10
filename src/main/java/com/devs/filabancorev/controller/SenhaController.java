@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devs.filabancorev.dto.ProximaSenhaDTO;
 import com.devs.filabancorev.dto.SenhaDTO;
 import com.devs.filabancorev.enums.TipoSenha;
 import com.devs.filabancorev.service.SenhaService;
@@ -26,6 +27,14 @@ public class SenhaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public SenhaDTO emitirSenha(@PathVariable TipoSenha tipo) {
 		return senhaService.emitirSenha(tipo);
+
+	}
+
+	@PostMapping("/chamar")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ProximaSenhaDTO proximaSenha() {
+
+		return senhaService.proximaSenha();
 
 	}
 
