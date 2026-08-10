@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devs.filabancorev.dto.FinalizarSenhaDTO;
 import com.devs.filabancorev.dto.ProximaSenhaDTO;
 import com.devs.filabancorev.dto.SenhaDTO;
 import com.devs.filabancorev.enums.TipoSenha;
@@ -35,6 +36,12 @@ public class SenhaController {
 	public ProximaSenhaDTO proximaSenha() {
 		return senhaService.proximaSenha();
 
+	}
+
+	@PostMapping("/finalizar")
+	@ResponseStatus(HttpStatus.CREATED)
+	public FinalizarSenhaDTO finalizarSenha() {
+		return senhaService.finalizarSenha();
 	}
 
 }

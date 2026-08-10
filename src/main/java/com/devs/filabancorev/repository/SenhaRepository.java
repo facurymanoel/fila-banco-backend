@@ -47,6 +47,15 @@ public interface SenhaRepository extends JpaRepository<Senha, Long> {
 			""")
 	Optional<Senha>buscarProximaNormal();
 	
+	@Query(nativeQuery = true, value = """
+			SELECT *
+			FROM senha
+			WHERE status = 'ATENDENDO'
+			ORDER BY id ASC
+			LIMIT 1
+			""")
+	Optional<Senha>finalizarAtendimentoSenha();
+	
 	
 
 }
