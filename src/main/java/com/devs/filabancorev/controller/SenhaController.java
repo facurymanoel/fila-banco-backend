@@ -33,7 +33,6 @@ public class SenhaController {
 	@PostMapping("/chamar")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProximaSenhaDTO proximaSenha() {
-
 		return senhaService.proximaSenha();
 
 	}
