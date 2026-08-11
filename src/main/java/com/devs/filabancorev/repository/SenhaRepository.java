@@ -56,6 +56,8 @@ public interface SenhaRepository extends JpaRepository<Senha, Long> {
 			""")
 	Optional<Senha>finalizarAtendimentoSenha();
 	
+	 
+	
 	
 
 }

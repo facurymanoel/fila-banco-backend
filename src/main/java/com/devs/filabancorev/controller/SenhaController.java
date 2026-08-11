@@ -2,6 +2,7 @@ package com.devs.filabancorev.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,11 @@ public class SenhaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public FinalizarSenhaDTO finalizarSenha() {
 		return senhaService.finalizarSenha();
+	}
+	
+	@GetMapping("/painel")
+	public ProximaSenhaDTO painel() {
+		return senhaService.buscarSenhaAtual();
 	}
 
 }

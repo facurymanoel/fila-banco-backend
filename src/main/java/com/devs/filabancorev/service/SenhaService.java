@@ -107,6 +107,19 @@ public class SenhaService {
 		return dto;
 
 	}
+	
+	public ProximaSenhaDTO buscarSenhaAtual() {
+
+		Optional<Senha> senha = senhaRepository
+				                .buscarSenhaEmAtendimento();
+
+		if (senha.isEmpty()) {
+
+			throw new RuntimeException("Nenhuma senha em atendimento");
+		}
+
+		return new ProximaSenhaDTO(senha.get());
+	}
 
 	private void preencherDadosIniciais(Senha senha) {
 		senha.setStatus(StatusSenha.AGUARDANDO);
