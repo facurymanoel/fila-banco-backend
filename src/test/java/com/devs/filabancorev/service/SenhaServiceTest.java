@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.devs.filabancorev.dto.FinalizarSenhaDTO;
 import com.devs.filabancorev.dto.ProximaSenhaDTO;
 import com.devs.filabancorev.dto.SenhaDTO;
 import com.devs.filabancorev.enums.StatusSenha;
@@ -430,6 +431,83 @@ public class SenhaServiceTest {
 		
 	}
 	
+	@Test
+	void deveFinalizarSenhaEmAtendimento() {
+
+		Senha senha = new Senha();
+		senha.setCodigo("N001");
+		senha.setTipo(TipoSenha.NORMAL);
+		senha.setStatus(StatusSenha.ATENDENDO);
+
+		when(senhaRepository.finalizarAtendimentoSenha())
+		     .thenReturn(Optional.of(senha));
+
+		when(senhaRepository.save(any(Senha.class)))
+		     .thenAnswer(invocation -> invocation.getArgument(0));
+
+		FinalizarSenhaDTO resultado = 
+				senhaService.finalizarSenha();
+
+		assertEquals(
+				StatusSenha.FINALIZADO, 
+				resultado.getStatus()
+				
+		);
+
+	}
 	
+	@Test
+	void devePreencherDataFimAtendimentoAoFinalizarSenha() {
+
+		Senha senha = new Senha();
+		senha.setCodigo("N001");
+		senha.setTipo(TipoSenha.NORMAL);
+		senha.setStatus(StatusSenha.ATENDENDO);
+
+		when(senhaRepository.finalizarAtendimentoSenha())
+		    .thenReturn(Optional.of(senha));
+
+		when(senhaRepository.save(any(Senha.class)))
+		    .thenAnswer(invocation -> invocation.getArgument(0));
+
+		senhaService.finalizarSenha();
+
+		assertNotNull(senha.getDataFimAtendimento());
+
+	}
+	
+	@Test
+	void deveSalvarSenhaAoFinalizarAtendimento() {
+
+		Senha senha = new Senha();
+		senha.setCodigo("N001");
+		senha.setTipo(TipoSenha.NORMAL);
+		senha.setStatus(StatusSenha.ATENDENDO);
+
+		when(senhaRepository.finalizarAtendimentoSenha())
+		    .thenReturn(Optional.of(senha));
+
+		senhaService.finalizarSenha();
+
+		verify(senhaRepository).save(senha);
+	}
+	
+	@Test
+	void deveLancarExcecaoQuandoNaoHaSenhaEmAtendimento() {
+
+		when(senhaRepository.finalizarAtendimentoSenha())
+		    .thenReturn(Optional.empty());
+
+		RuntimeException excecao = assertThrows(
+				RuntimeException.class, 
+				() -> senhaService.finalizarSenha()
+		);
+
+		assertEquals(
+				"Não há senha em atendimento.", 
+				excecao.getMessage()
+		);
+
+	}
 
 }
