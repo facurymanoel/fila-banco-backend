@@ -509,5 +509,39 @@ public class SenhaServiceTest {
 		);
 
 	}
+	
+	@Test
+	void deveRetornarSenhaAtualEmAtendimento() {
+
+		Senha senha = new Senha();
+		senha.setCodigo("N001");
+		senha.setTipo(TipoSenha.NORMAL);
+		senha.setStatus(StatusSenha.ATENDENDO);
+
+		when(senhaRepository.buscarSenhaEmAtendimento())
+		    .thenReturn(Optional.of(senha));
+
+		ProximaSenhaDTO resultado = 
+				senhaService.buscarSenhaAtual();
+
+		assertEquals("N001", resultado.getCodigo());
+
+	}
+	
+	@Test
+	void deveLancarExcecaoQuandoNaoHaSenhaAtual() {
+
+		when(senhaRepository.buscarSenhaEmAtendimento())
+		    .thenReturn(Optional.empty());
+
+		RuntimeException excecao = assertThrows(
+				RuntimeException.class, 
+				() -> senhaService.buscarSenhaAtual());
+
+		assertEquals(
+				"Nenhuma senha em atendimento", 
+				 excecao.getMessage());
+
+	}
 
 }
