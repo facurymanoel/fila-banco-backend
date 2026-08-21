@@ -24,6 +24,14 @@ import com.devs.filabancorev.enums.TipoSenha;
 import com.devs.filabancorev.model.Senha;
 import com.devs.filabancorev.repository.SenhaRepository;
 
+/**
+ * Testes unitários para as regras de negócio da 
+ * classe {@link SenhaService}
+ * 
+ * Utiliza Mockito para simular o comportamento 
+ * do {@link SenhaRepository}, permitindo testar
+ * a camada de serviço de forma isolada.
+ */
 @ExtendWith(MockitoExtension.class)
 public class SenhaServiceTest {
 	

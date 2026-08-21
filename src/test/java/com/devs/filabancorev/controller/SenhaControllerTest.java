@@ -18,6 +18,14 @@ import com.devs.filabancorev.enums.TipoSenha;
 import com.devs.filabancorev.model.Senha;
 import com.devs.filabancorev.service.SenhaService;
 
+/**
+ * Testes unitários para os endpoints
+ * da classe {@link SenhaController}.
+ * 
+ * Utiliza Mockito para simular o comportamento
+ * do {@link SenhaService}, permitindo testar
+ * o controller de forma isolada.
+ */
 @ExtendWith(MockitoExtension.class)
 public class SenhaControllerTest {
 	
